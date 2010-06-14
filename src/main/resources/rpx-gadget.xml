@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+   <ModulePrefs  title="RPX" directory_title="RPX" description="Allow login with OpenID">
+        <Optional feature="gadget-directory">
+            <Param name="categories">
+                Other
+            </Param>
+        </Optional>
+        <Require feature="setprefs"/>
+    </ModulePrefs>
+    <UserPref name="isConfigured" datatype="hidden" default_value="false"/>
+    <Content type="html">
+        <![CDATA[
+            Login with OpenID
+			<form method="POST" action="http://signin.rweishar.com/openid/start?token_url=http%3A%2F%2Flocalhost%3A2990%2Fjira%2Frpx_end">
+			<input name="openid_identifier">
+			<input type="submit" value="login">
+			</form>
+        ]]>
+    </Content>
+</Module>

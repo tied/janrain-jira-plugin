@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Action Alpha Success</title>
+  </head>
+  
+  <body>
+
+    <div style="background: #FFFFFF">
+    	<!-- The ActionRPXConfig doValidation method and then doExecute
+           method will be called -->
+      <form id="rpx_config" method="post" action="${req.contextPath}/secure/RPXConfigAction.jspa">
+      <table class="jiraform maxWidth">
+        <tr>
+          <td class="jiraformheader">
+            <h3 class="formtitle">RPX Configuration</h3>
+          </td>
+        </tr>
+        <tr>
+          <td class="jiraformbody">
+          Please enter your API key to configure RPX.
+          </td>
+        </tr>   
+
+        <tr>
+          <td class="fieldValueArea">
+              ## Note: ${myfirstparameter} is the same as $action.getMyfirstparameter()
+              ## It's important to encode the inputs to avoid XSS hacks
+              ## JSP does this for you but Velocity templates don't.
+              <input type="text"
+                     id="id_apiKey" 
+                	 name="apiKey"
+                     value=""
+                     size="60"
+                     />
+              <br>
+              <font size="1">An example of a text parameter.</font> 
+	    	</td>
+        </tr>  
+        <tr>
+          <td class="fieldValueArea">
+	        <input type="submit" name="Submit" id="Submit" value="Save"
+                     accesskey="S"
+                     title="Press Ctrl+S to submit form"
+                     class="spaced"
+                     />
+           </td> 
+        </tr>
+      </table> 
+      </form> 
+      <br>      
+
+  </body>
+</html>
