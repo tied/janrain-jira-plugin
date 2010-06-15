@@ -2,7 +2,10 @@ package com.janrain.jira.plugins.webwork;
 
 import java.util.Enumeration;
 
+import com.atlassian.jira.config.properties.PropertiesManager;
 import com.atlassian.jira.web.action.JiraWebActionSupport;
+import com.opensymphony.module.propertyset.PropertySet;
+import com.janrain.jira.plugins.*;
 
 /**
  * Webwork has an ActionSupport class that includes some commonly
@@ -16,6 +19,8 @@ import com.atlassian.jira.web.action.JiraWebActionSupport;
  * https://svn.atlassian.com/svn/public/atlassian/vendor/webwork-1.4/trunk/src/main/webwork/action/ActionSupport.java
  */
 public class ActionRPXConfig extends JiraWebActionSupport {
+	String apiKey = null;
+	
 	
 	public ActionRPXConfig() throws Exception {
 		System.out.println("ActionRPXConfig");
@@ -38,26 +43,46 @@ public class ActionRPXConfig extends JiraWebActionSupport {
      *
      * No exceptions are thrown, instead errors and error messages are set.
      */
-	protected void doValidation() {
+	protected void doValidation() 
+	{
 		System.out.println("doValidation");
 		//if(request.getParameterValues())
-		for (Enumeration e =  request.getParameterNames(); e.hasMoreElements() ;) {
+		for (Enumeration e =  request.getParameterNames(); e.hasMoreElements() ;) 
+		{
             String n = (String)e.nextElement();
             String[] vals = request.getParameterValues(n);
             System.out.println("name " + n + ": " + vals[0]);
-        }
+        
+            if (n.equals("apiKey"))
+            {
+            	apiKey = vals[0];
+            }
+		}
 		
-		addErrorMessage("An error occurred");
+//		addErrorMessage("An error occurred");
 	}
 	
 	/**
      * This method is always called when this Action's .jspa URL is
      * invoked if there were no errors in doValidation().
      */
-	protected String doExecute() throws Exception {
-      
+	protected String doExecute() throws Exception 
+	{
 		System.out.println("doExecute");
-        return SUCCESS;
+		
+		RPXManager rpxManager = new RPXManager();
+//		try 
+//		{
+			rpxManager.configure(apiKey); 
+//		} 
+//		catch(Exception e) 
+//			{ return INPUT; } 
+		
+		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
+	    System.out.println(PS.getKeys());
+	
+	    return INPUT;
+//		return SUCCESS;
     }
 	
 	/**

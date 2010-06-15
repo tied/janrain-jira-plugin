@@ -33,7 +33,8 @@ public class RPXEndpoint implements Filter {
 	 */
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
 			FilterChain arg2) throws IOException, ServletException {
-	
+		System.out.println("doFilter");
+		
 		RPXManager rpxManager = new RPXManager();
 		if(!rpxManager.isConfigured()) {
 			System.out.println("RPX not configured");
@@ -88,6 +89,11 @@ public class RPXEndpoint implements Filter {
 	    response.sendRedirect("/jira");
 
 	}
+	
+//	public void rpx_end()
+//	{
+//		
+//	}
 	 
 	/*
 	 * Called before doFilter
