@@ -34,7 +34,7 @@
  						template: function(args) {		
  							var gadget = this;
  							this.getView().empty();
-	      	    	      	//alert(args.startUrl);
+	      	    	      	//alert(args.test);
  			
  							var str = '<div style="margin:10px;">\
  							           Login with your OpenID\
@@ -54,7 +54,22 @@
  							key: "startUrl",
  							ajaxOptions: function() {
  								return { 
- 									url: "/rest/com-janrain-rpx-rest/1.0/startUrl",
+ 									url: "/rest/com-janrain-rpx-rest/1.0/manager/startUrl",
+ 									dataType: "text",
+ 									cache: false
+ 									//, 
+ 									//beforeSend: function() { alert("before"); },
+   									//complete: function() { alert("complete"); },
+ 									//error: function(a, b, c) { alert("error: " + a); },
+ 									//success: function(a, b, c) { alert("success"); }
+ 								}
+ 							}	
+ 						},
+ 						{
+ 							key: "test",
+ 							ajaxOptions: function() {
+ 								return { 
+ 									url: "/rest/com-janrain-rpx-rest/1.0/manager/test",
  									dataType: "text",
  									cache: false
  									//, 

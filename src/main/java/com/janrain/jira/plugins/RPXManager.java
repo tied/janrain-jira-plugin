@@ -39,8 +39,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 
 
 
-
-@Path("/startUrl")
+@Path("/manager")
 public class RPXManager {
 
 	public RPXManager() {}
@@ -72,6 +71,7 @@ public class RPXManager {
 	@GET
 	@AnonymousAllowed
 	@Produces({MediaType.TEXT_PLAIN})
+	@Path("/startUrl")
 	public String getStartUrl()
 	{
 		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
@@ -88,6 +88,14 @@ public class RPXManager {
 		return str + "/openid/start?token_url=http%3A%2F%2Flocalhost%3A2990%2Fjira%2Frpx_end";
 	}
 
+	@GET
+	@AnonymousAllowed
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("/test")
+	public String test()
+	{
+		return "test";
+	}
 	
 	/*
 	 * Parses the XML auth_info response for a mapped username. If none exists, returns null
@@ -121,6 +129,10 @@ public class RPXManager {
 	/*
 	 * Ensure that the plugin has the values it needs.
 	 */
+	@GET
+	@AnonymousAllowed
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("/isConfigured")
 	public boolean isConfigured() {
 		return ((getValue("apiKey") != null) && (getValue("base_url") != null));
 	}
