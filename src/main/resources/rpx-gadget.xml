@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
     <ModulePrefs
-    	title="RPX"
+    	title="Kodak OpenID Login"
     	author="Janrain, Inc."
     	directory_title="RPX" 
-    	description="Allow login with OpenID">
+    	description="Gadget to allow login with OpenID using Janrain Engage">
     	<Optional feature="gadget-directory">
         	<Param name="categories">
             	JIRA
@@ -36,7 +36,7 @@
  							this.getView().empty();
 	      	    	      	//alert(args.startUrl);
  			
- 							var str = 'Login with OpenID\
+ 							var str = 'Login with your OpenID\
 									   <form method="POST" action="' +
 									   args.startUrl +
 									   '">\
