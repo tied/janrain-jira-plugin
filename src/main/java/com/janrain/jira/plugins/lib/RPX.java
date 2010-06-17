@@ -164,14 +164,15 @@ public class RPX
             }
             catch (UnsupportedEncodingException e)
             {
+            	System.out.println("Unexpected encoding error");
                 throw new RuntimeException("Unexpected encoding error", e);
             }
         }
 
         String data = sb.toString();
 
-        try {
-
+        try 
+        {
             URL url = new URL(baseUrl + "/api/v2/" + methodName);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("POST");
@@ -186,28 +187,35 @@ public class RPX
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.parse(conn.getInputStream());
             Element response = (Element)doc.getFirstChild();
-            if (!response.getAttribute("stat").equals("ok")) {
+            if (!response.getAttribute("stat").equals("ok"))
+            {
+            	System.out.println(response.getAttributes().item(0).getNodeName() + "=" + 
+            					   response.getAttributes().item(0).getNodeValue());
                 throw new RuntimeException("Unexpected API error");
-
             }
+            System.out.println("Returning response");
             return response;
         } 
         catch (MalformedURLException e) 
         {
+        	System.out.println("Unexpected URL error");
             throw new RuntimeException("Unexpected URL error", e);
-        } catch (IOException e) 
+        } 
+        catch (IOException e) 
         {
-            throw new RuntimeException("Unexpected IO error", e);
+        	System.out.println("Unexpected IO error");
+        	throw new RuntimeException("Unexpected IO error", e);
         }
         catch (ParserConfigurationException e) 
         {
-            throw new RuntimeException("Unexpected XML error", e);
+        	System.out.println("Unexpected XML error");
+        	throw new RuntimeException("Unexpected XML error", e);
         } 
         catch (SAXException e) 
         {
+        	System.out.println("Unexpected SAX error");
             throw new RuntimeException("Unexpected XML error", e);
         }
-
     }
     
     public Map<String, String> getOpenIdInformationMap(Element element) 

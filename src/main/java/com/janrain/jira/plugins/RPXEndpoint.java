@@ -19,10 +19,12 @@ import com.opensymphony.user.UserManager;
 
 import org.w3c.dom.Element;
 
-public class RPXEndpoint implements Filter {
+public class RPXEndpoint implements Filter 
+{
 
 	private final UserManager fUserManager = UserManager.getInstance(); // used to interface with JIRA users
-	public void destroy() {
+	public void destroy() 
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -41,30 +43,47 @@ public class RPXEndpoint implements Filter {
 			// return with an error
 		}
 		//RPX rpx = new RPX("ae9b5f0d67179bb78cea3d14815ca4d4a2b29f3a", "http://ren-sandbox.moldy.janrain.com:8080/");
-		RPX rpx = new RPX(rpxManager.getValue("com.janrain.rpx.apiKey"), rpxManager.getValue("com.janrain.rpx.base_url"));
 		
+		System.out.println("Creating RPX instance");
+		RPX rpx = new RPX(rpxManager.getValue("apiKey"), rpxManager.getValue("base_url"));
+		System.out.println("Created");
+
+
+		System.out.println("Getting token");
 		String token = arg0.getParameter("token");
+		System.out.println("Token: " + token);
 		
-		if(token == null) {
+		if(token == null) 
+		{
 			// return with an error
 		}
 		 
 		Element rpxAuthInfo = null;
 		 
-		try	{
+		try	
+		{
+
+			System.out.println("Calling auth_info");
 			rpxAuthInfo = rpx.authInfo(token);
+			System.out.println("auth_info response # of elements: " + rpxAuthInfo.getChildNodes().getLength());
 		}	 
-		catch(RuntimeException runtimeException) {
+		catch(RuntimeException runtimeException) 
+		{
 			// return with an error
-			System.out.println("Exception Occured :" + runtimeException.getMessage());
+			System.out.println("Runtime Exception Occured :");// + runtimeException.getMessage());
 		}
-		catch(Exception exception) {
+		catch(Exception exception) 
+		{
 			// return with an error
 			System.out.println("Exception Occured :" + exception.getMessage());
 		}
-		
+
+		System.out.println("Getting JIRA user name");
 		String username = rpxManager.getJIRAUsername(rpxAuthInfo);
-		if(username == null) {
+		System.out.println("JIRA user name: " + username);
+		
+		if(username == null) 
+		{
 			// return with an error
 		}
 		
@@ -74,26 +93,30 @@ public class RPXEndpoint implements Filter {
 		 */
 		User user = null;
 	   	    
-	    try {
+	    try 
+	    {
+			System.out.println("Getting JIRA user");
 	    	user = fUserManager.getUser(username);
+			System.out.println("JIRA user: " + user);
 	    }
-	    catch (EntityNotFoundException e) {
+	    catch (EntityNotFoundException e) 
+	    {
 	    	// return with an error
 			e.printStackTrace();
 		}
+	    
+		System.out.println("Logging user in");
 	    HttpServletRequest request = (HttpServletRequest) arg0;
 	    HttpServletResponse response = (HttpServletResponse) arg1;
 	    request.getSession().setAttribute(DefaultAuthenticator.LOGGED_IN_KEY, user);
 	    request.getSession().setAttribute(DefaultAuthenticator.LOGGED_OUT_KEY, null);
+		System.out.println("User logged in");
 
-	    response.sendRedirect("/jira");
+		System.out.println("Redirecting");
+		response.sendRedirect("/jira");
 
 	}
 	
-//	public void rpx_end()
-//	{
-//		
-//	}
 	 
 	/*
 	 * Called before doFilter

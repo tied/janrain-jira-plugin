@@ -73,14 +73,16 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 		RPXManager rpxManager = new RPXManager();
 //		try 
 //		{
-			rpxManager.configure(apiKey); 
+			System.out.println(rpxManager.configure(apiKey)); 
 //		} 
 //		catch(Exception e) 
 //			{ return INPUT; } 
 		
 		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
 	    System.out.println(PS.getKeys());
-	
+	    System.out.println(PS.getText("com.janrain.rpx.apiKey"));
+	    System.out.println(PS.getText("com.janrain.rpx.base_url"));
+		
 	    return INPUT;
 //		return SUCCESS;
     }

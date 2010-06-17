@@ -13,6 +13,10 @@
         <dispatcher>FORWARD</dispatcher>
     </servlet-filter>
     
+    <rest key="rest-service-resources" path="/com-janrain-rpx-rest" version="1.0">
+	    <description>Provides the REST resource for the rpx plugin.</description>
+	</rest>
+    
     <webwork1 key="rpxconfiguration" name="RPX Configuration" class="java.lang.Object">
     	<actions>
     	    <action name="com.janrain.jira.plugins.webwork.ActionRPXConfig" alias="RPXConfigAction">

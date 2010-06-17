@@ -1,21 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
-   <ModulePrefs  title="RPX" directory_title="RPX" description="Allow login with OpenID">
-        <Optional feature="gadget-directory">
-            <Param name="categories">
-                Other
-            </Param>
-        </Optional>
-        <Require feature="setprefs"/>
-    </ModulePrefs>
+    <ModulePrefs
+    	title="RPX"
+    	author="Janrain, Inc."
+    	directory_title="RPX" 
+    	description="Allow login with OpenID">
+    	<Optional feature="gadget-directory">
+        	<Param name="categories">
+            	JIRA
+          	</Param>
+      	</Optional>
+      	<Require feature="setprefs" />
+		<Require feature="settitle"/>
+		<Require feature="views" />
+		<Optional feature="atlassian.util" />
+		<Require feature="minimessage" />
+ 		<Require feature="dynamic-height" />
+      	#supportedLocales("gadget.common")
+  	</ModulePrefs>
     <UserPref name="isConfigured" datatype="hidden" default_value="false"/>
     <Content type="html">
         <![CDATA[
-            Login with OpenID
-			<form method="POST" action="http://signin.rweishar.com/openid/start?token_url=http%3A%2F%2Flocalhost%3A2990%2Fjira%2Frpx_end">
-			<input name="openid_identifier">
-			<input type="submit" value="login">
-			</form>
+        #requireResource("com.atlassian.jira.gadgets:common")
+		#includeResources()
+ 			
+		<script type="text/javascript">
+ 			(function () {
+ 				var gadget = AJS.Gadget ({
+ 					baseUrl: "__ATLASSIAN_BASE_URL__",
+					view: {
+ 						enableReload: true,
+ 						onResizeAdjustHeight: true,
+ 						template: function(args) {		
+ 							var gadget = this;
+ 							this.getView().empty();
+	      	    	      	//alert(args.startUrl);
+ 			
+ 							var str = 'Login with OpenID\
+									   <form method="POST" action="' +
+									   args.startUrl +
+									   '">\
+									   <input name="openid_identifier">\
+									   <input type="submit" value="login">\
+									   </form>';
+									 
+ 							this.getView().html(str);
+   										
+			                gadget.resize();
+ 						},
+ 						args: [{
+ 							key: "startUrl",
+ 							ajaxOptions: function() {
+ 								return { 
+ 									url: "/rest/com-janrain-rpx-rest/1.0/startUrl",
+ 									dataType: "text",
+ 									cache: false
+ 									//, 
+ 									//beforeSend: function() { alert("before"); },
+   									//complete: function() { alert("complete"); },
+ 									//error: function(a, b, c) { alert("error: " + a); },
+ 									//success: function(a, b, c) { alert("success"); }
+ 								}
+ 							}	
+ 						}]
+ 					}
+ 				});
+ 			})();	
+		</script>
         ]]>
     </Content>
 </Module>
