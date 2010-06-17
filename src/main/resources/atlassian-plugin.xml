@@ -6,18 +6,18 @@
         <param  name="configure.url">/secure/RPXConfigAction.jspa</param>
     </plugin-info>
     
-    <servlet-filter name="Janrain Engage Authentication Servlet"  key="rpx_endpoint" class="com.janrain.jira.plugins.RPXEndpoint"  location="before-dispatch" weight="200">
+    <servlet-filter name="Janrain Engage Authentication Servlet"  key="janrain_engage_endpoint" class="com.janrain.jira.plugins.RPXEndpoint"  location="before-dispatch" weight="200">
         <description>This servlet is used to completes OpenID authentication.</description>
         <url-pattern>/rpx_end</url-pattern>
 	    <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>
     </servlet-filter>
     
-    <rest key="rest-service-resources" name="Janrain Engage REST Resource" path="/com-janrain-rpx-rest" version="1.0">
+    <rest key="janrain_engage_rest_resources" name="Janrain Engage REST Resource" path="/com-janrain-rpx-rest" version="1.0">
 	    <description>Provides the REST resource for the Engage Plugin.</description>
 	</rest>
     
-    <webwork1 key="rpxconfiguration" name="Janrain Engage Plugin Configuration" class="java.lang.Object">
+    <webwork1 key="janrain_engage_configuration" name="Janrain Engage Plugin Configuration" class="java.lang.Object">
     	<description>Configure the Engage Plugin with your Application Key.</description>
     	<actions>
     	    <action name="com.janrain.jira.plugins.webwork.ActionRPXConfig" alias="RPXConfigAction">
@@ -29,7 +29,7 @@
         </actions>
     </webwork1>
     
-    <gadget key="rpx-gadget" name="Janrain Engage Login Gadget" location="rpx-gadget.xml">
+    <gadget key="janrain_engage_gadget" name="Janrain Engage Login Gadget" location="rpx-gadget.xml">
     <description>
         Allows OpenID authentication via Janrain Engage
     </description>
