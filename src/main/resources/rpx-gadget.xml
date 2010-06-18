@@ -38,7 +38,7 @@
  			
  							var str = '<div style="margin:10px;">\
  							           Login with your OpenID\
-									   <form method="POST" action="' +
+									   <form method="POST" target="_top" action="' +
 									   args.startUrl +
 									   '">\
 									   <input name="openid_identifier">\
