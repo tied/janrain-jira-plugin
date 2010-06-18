@@ -1,41 +1,29 @@
 package com.janrain.jira.plugins;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
-import com.opensymphony.module.propertyset.PropertyException;
-import com.opensymphony.module.propertyset.PropertySet;
-import com.atlassian.jira.config.properties.PropertiesManager;
-import com.atlassian.jira.config.properties.ApplicationPropertiesImpl;
-import com.atlassian.seraph.auth.DefaultAuthenticator;
-import com.opensymphony.user.UserManager;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.DOMException;
-import org.xml.sax.SAXException;
-
-import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
+import com.atlassian.jira.ComponentManager;
+import com.atlassian.jira.config.properties.PropertiesManager;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
- 
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
+import com.opensymphony.module.propertyset.PropertyException;
+import com.opensymphony.module.propertyset.PropertySet;
+import com.opensymphony.user.User;
 
 
 
@@ -91,10 +79,15 @@ public class RPXManager {
 	@GET
 	@AnonymousAllowed
 	@Produces({MediaType.TEXT_PLAIN})
-	@Path("/test")
-	public String test()
+	@Path("/username")
+	public String getUserName()
 	{
-		return "test";
+		User user = ComponentManager.getInstance().getJiraAuthenticationContext().getUser();
+	
+		if(user != null)
+		 return user.getFullName();
+		
+		return "";
 	}
 	
 	/*

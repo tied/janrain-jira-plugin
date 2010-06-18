@@ -24,6 +24,7 @@
         #requireResource("com.atlassian.jira.gadgets:common")
 		#includeResources()
  			
+ 			
 		<script type="text/javascript">
  			(function () {
  				var gadget = AJS.Gadget ({
@@ -34,18 +35,31 @@
  						template: function(args) {		
  							var gadget = this;
  							this.getView().empty();
-	      	    	      	//alert(args.test);
+	      	
+ 							var username = args.username;
+ 							var str = '<div style="margin:10px;">';
  			
- 							var str = '<div style="margin:10px;">\
- 							           Login with your OpenID\
-									   <form method="POST" target="_top" action="' +
-									   args.startUrl +
-									   '">\
-									   <input name="openid_identifier">\
-									   <input type="submit" value="login">\
-									   </form>\
-									   </div>';
-									 
+ 							if(username === "")
+ 							{
+ 								str += 'Login with your OpenID\
+									   	<form method="POST" target="_top" action="' +
+									   	args.startUrl +
+									   	'">\
+									   	<input name="openid_identifier">\
+									   	<input type="submit" value="login">\
+									   	</form>\
+									   	</div>';
+							}
+							else
+							{
+								str += '<p>You are signed in as ' +
+										args.username +
+										'.  <a href="' +
+										"__ATLASSIAN_BASE_URL__" +
+										'/logout">Sign Out.</a></p>\
+										</div>';
+							}
+											
  							this.getView().html(str);
    										
 			                gadget.resize();
@@ -66,10 +80,10 @@
  							}	
  						},
  						{
- 							key: "test",
+ 							key: "username",
  							ajaxOptions: function() {
  								return { 
- 									url: "/rest/com-janrain-rpx-rest/1.0/manager/test",
+ 									url: "/rest/com-janrain-rpx-rest/1.0/manager/username",
  									dataType: "text",
  									cache: false
  									//, 
