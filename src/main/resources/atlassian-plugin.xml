@@ -24,7 +24,7 @@
 	          <view name="success">/templates/com/janrain/jira/plugins/rpx/config/success.vm</view>
 	          <!-- <view name="error">/templates/com/consultingtoolsmiths/jira/samples/webwork/error.vm</view> -->
 	          <view name="input">/templates/com/janrain/jira/plugins/rpx/config/input.vm</view>
-	          <view name="reconfigure">/templates/com/janrain/jira/plugins/rpx/config/reconfigure.vm</view>
+	          <!-- <view name="reconfigure">/templates/com/janrain/jira/plugins/rpx/config/reconfigure.vm</view> -->
         	</action>
         </actions>
     </webwork1>

@@ -12,19 +12,16 @@
             <h3 class="formtitle">SUCCESS!</h3>
           </td>
         </tr>
-        <tr>
-          <td class="jiraformbody">
-          Please enter your API key to configure RPX.
-          </td>
-        </tr>   
+       #if ($action.getApiKey())
+  <tr>
+    <td>Your current API Key is ${action.getApiKey()}</td>
+  </tr>
+#end
 
-        <tr>
-          <td class="jiraformbody">
-          The raw current parameter value is: 
-          </td>
-        </tr>   
+  <tr>
+    <td><a href="./RPXConfigAction.jspa?action=reconfigure">Reconfigure</a></td>
+  </tr>
       </table>  
       <br>      
-	<a href="reconfigure">Reconfigure</a>
   </body>
 </html>

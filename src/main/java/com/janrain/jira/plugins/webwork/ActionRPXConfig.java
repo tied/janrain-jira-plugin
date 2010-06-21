@@ -20,9 +20,11 @@ import com.janrain.jira.plugins.*;
  */
 public class ActionRPXConfig extends JiraWebActionSupport {
 	String apiKey = null;
+	RPXManager rpxManager = new RPXManager();
+	String action = "none";
 	
-	
-	public ActionRPXConfig() throws Exception {
+	public ActionRPXConfig() throws Exception 
+	{
 		System.out.println("ActionRPXConfig");
 	}
 	
@@ -46,6 +48,7 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 	protected void doValidation() 
 	{
 		System.out.println("doValidation");
+		action = "none";
 		//if(request.getParameterValues())
 		for (Enumeration e =  request.getParameterNames(); e.hasMoreElements() ;) 
 		{
@@ -53,9 +56,29 @@ public class ActionRPXConfig extends JiraWebActionSupport {
             String[] vals = request.getParameterValues(n);
             System.out.println("name " + n + ": " + vals[0]);
         
-            if (n.equals("apiKey"))
+            if (n.equals("action"))
+            {
+            	action = vals[0];
+            }
+            else if (n.equals("apiKey"))
             {
             	apiKey = vals[0];
+            	
+            	if (apiKey.length() == 0)
+            	{
+            		addErrorMessage("The API key you entered was not correct.");
+            	}
+            	else
+            	{
+            		try 
+            		{
+            			rpxManager.configure(apiKey); 
+            		} 
+            		catch(Exception exception) 
+            		{ 
+            			addErrorMessage(exception.getLocalizedMessage());
+            		}
+            	}
             }
 		}
 		
@@ -70,19 +93,24 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 	{
 		System.out.println("doExecute");
 		
-		RPXManager rpxManager = new RPXManager();
-//		try 
-//		{
-			System.out.println(rpxManager.configure(apiKey)); 
-//		} 
-//		catch(Exception e) 
-//			{ return INPUT; } 
+//		RPXManager rpxManager = new RPXManager();
 		
 		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
 	    System.out.println(PS.getKeys());
 	    System.out.println(PS.getText("com.janrain.rpx.apiKey"));
 	    System.out.println(PS.getText("com.janrain.rpx.base_url"));
 		
+//		addErrorMessage("Another error occurred");
+	
+	    if(action.equals("cancel"))
+	    	return SUCCESS;
+	    
+	    if(action.equals("reconfigure"))
+	    	return INPUT;
+	    
+	    if(rpxManager.isConfigured())
+	    	return SUCCESS;
+	    
 	    return INPUT;
 //		return SUCCESS;
     }
@@ -102,5 +130,16 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 		System.out.println("doDefault");
 		//return INPUT;
 		return super.doDefault();
+	}
+	
+	public String getApiKey()
+	{
+		RPXManager rpxManager = new RPXManager();
+		
+		String str = null;
+		
+		str = rpxManager.getValue("apiKey");
+		
+		return str;
 	}
 }

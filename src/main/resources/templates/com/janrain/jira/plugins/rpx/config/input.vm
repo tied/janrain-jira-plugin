@@ -5,6 +5,7 @@
   
   <body>
 
+
     <div style="background: #FFFFFF">
     	<!-- The ActionRPXConfig doValidation method and then doExecute
            method will be called -->
@@ -15,9 +16,22 @@
             <h3 class="formtitle">RPX Configuration</h3>
           </td>
         </tr>
+
+  #foreach ($error in $action.getErrorMessages())
+  <tr>
+    <td><span style="margin: 2px; border: 1px solid red; background: pink;">${error}</span></td>
+  </tr>
+  #end    
+
+#if ($action.getApiKey())
+  <tr>
+    <td><span style="margin: 2px; border: 1px solid yellow; background: lightYellow;">Current API Key: ${action.getApiKey()}</span></td>
+  </tr>
+#end
+
         <tr>
           <td class="jiraformbody">
-          Please enter your API key to configure RPX.
+          Please enter your API key to configure the Janrain Engage Plugin.
           </td>
         </tr>   
 
@@ -33,7 +47,7 @@
                      size="60"
                      />
               <br>
-              <font size="1">An example of a text parameter.</font> 
+              <!-- <font size="1">An example of a text parameter.</font> --> 
 	    	</td>
         </tr>  
         <tr>
@@ -45,6 +59,13 @@
                      />
            </td> 
         </tr>
+    
+#if ($action.getApiKey())
+  <tr>
+    <td><a href="./RPXConfigAction.jspa?action=cancel">Cancel</a></td>
+  </tr>
+#end
+    
       </table> 
       </form> 
       <br>      
