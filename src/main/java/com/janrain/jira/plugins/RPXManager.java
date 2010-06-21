@@ -126,40 +126,29 @@ public class RPXManager {
 	@AnonymousAllowed
 	@Produces({MediaType.TEXT_PLAIN})
 	@Path("/isConfigured")
-	public boolean isConfigured() {
+	public boolean isConfigured() 
+	{
 		return ((getValue("apiKey") != null) && (getValue("base_url") != null));
 	}
 	
 	public void configure(String apiKey)
 	{
-	//	System.out.println("Storing the apiKey: " + apiKey);
-		//if(!isConfigured())
-		//else
-		//	apiKey = getValue("apiKey");
-
+	
         String base_url;
-		String data = "apiKey=" + apiKey + "&format=xml";
-
-	//	System.out.println("Stored");
-		System.out.println("Calling plugin/lookup_rp: " + "https://rpxnow.com/plugin/lookup_rp?" + data);
+	
+        String data = "apiKey=" + apiKey + "&format=xml";
 		
         try 
         {
-
+            System.out.println("Calling plugin/lookup_rp: " + "https://rpxnow.com/plugin/lookup_rp?" + data);
             URL url = new URL("https://rpxnow.com/plugin/lookup_rp?" + data);
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("GET");
-            //conn.setDoOutput(true);
             conn.connect();
-
             System.out.println("Called");
             
             System.out.println("Parsing response");
-          
-//            OutputStreamWriter osw = new OutputStreamWriter(
-//                conn.getOutputStream(), "UTF-8");
-//            osw.write(data);
-//            osw.close();
+       
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             dbf.setIgnoringElementContentWhitespace(true);
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -175,9 +164,7 @@ public class RPXManager {
             	pluginResponse.getElementsByTagName("realm").getLength() == 0) 
             {
                 throw new RuntimeException("Unexpected API error");
-        //    	return "Unexpected API error";
             }
-            
             
             try
             {
@@ -187,7 +174,6 @@ public class RPXManager {
             catch (DOMException e)
             {
                 throw new RuntimeException("Unexpected XML error", e);
-            	//return "Unexpected XML error";
             }
             
             System.out.println("Parsed");
@@ -195,24 +181,19 @@ public class RPXManager {
         catch (MalformedURLException e) 
         {
             throw new RuntimeException("Unexpected URL error", e);
-        	//return "Unexpected URL error";
         } 
         catch (IOException e) 
         {
         	// TODO: This is where non-existent RPs go
             throw new RuntimeException("Unexpected IO error", e);
-     
-        	//return "Unexpected IO error";
         }
         catch (ParserConfigurationException e) 
         {
             throw new RuntimeException("Unexpected XML error", e);
-        	//return "Unexpected XML error";
         }
         catch (SAXException e) 
         {
             throw new RuntimeException("Unexpected XML error", e);
-        	//return "Unexpected XML error";
         }
      
 	    System.out.println("Storing the apiKey and base_url: " + apiKey + ", " + base_url);
@@ -221,8 +202,7 @@ public class RPXManager {
         storeKeyValue("base_url", base_url);
 			
 		System.out.println("Stored");
-
         
-        return;// "Success";
+        return;
 	}
 }
