@@ -1,27 +1,32 @@
 <html>
   <head>
-    <title>Action Alpha Success</title>
+    <title>Plugin Successfully Configured</title>
   </head>
   
   <body>
-
     <div style="background: #FFFFFF">
       <table class="jiraform maxWidth">
         <tr>
           <td class="jiraformheader">
-            <h3 class="formtitle">SUCCESS!</h3>
+            <h3 class="formtitle">The Janrain Engage Plugin is successfully configured.</h3>
           </td>
         </tr>
-       #if ($action.getApiKey())
-  <tr>
-    <td>Your current API Key is ${action.getApiKey()}</td>
-  </tr>
-#end
+       
+        #if ($action.getApiKey())
+  		<tr>
+    	  <td>
+    	    Your current API Key is ${action.getApiKey()}
+    	  </td>
+  		</tr>
+		#end
 
-  <tr>
-    <td><a href="./RPXConfigAction.jspa?action=reconfigure">Reconfigure</a></td>
-  </tr>
+  		<tr>
+    	  <td>
+    	  	<a href="./RPXConfigAction.jspa?action=reconfigure">Reconfigure</a>
+    	  </td>
+  		</tr>
       </table>  
-      <br>      
+      <br>
+    </div>      
   </body>
 </html>

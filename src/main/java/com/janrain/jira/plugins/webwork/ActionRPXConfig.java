@@ -49,7 +49,7 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 	{
 		System.out.println("doValidation");
 		action = "none";
-		//if(request.getParameterValues())
+
 		for (Enumeration e =  request.getParameterNames(); e.hasMoreElements() ;) 
 		{
             String n = (String)e.nextElement();
@@ -81,8 +81,6 @@ public class ActionRPXConfig extends JiraWebActionSupport {
             	}
             }
 		}
-		
-//		addErrorMessage("An error occurred");
 	}
 	
 	/**
@@ -92,15 +90,6 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 	protected String doExecute() throws Exception 
 	{
 		System.out.println("doExecute");
-		
-//		RPXManager rpxManager = new RPXManager();
-		
-		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
-	    System.out.println(PS.getKeys());
-	    System.out.println(PS.getText("com.janrain.rpx.apiKey"));
-	    System.out.println(PS.getText("com.janrain.rpx.base_url"));
-		
-//		addErrorMessage("Another error occurred");
 	
 	    if(action.equals("cancel"))
 	    	return SUCCESS;
@@ -112,7 +101,6 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 	    	return SUCCESS;
 	    
 	    return INPUT;
-//		return SUCCESS;
     }
 	
 	/**
@@ -128,7 +116,6 @@ public class ActionRPXConfig extends JiraWebActionSupport {
      */
 	public String doDefault() throws Exception {
 		System.out.println("doDefault");
-		//return INPUT;
 		return super.doDefault();
 	}
 	
