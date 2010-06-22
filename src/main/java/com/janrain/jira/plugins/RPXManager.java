@@ -89,6 +89,19 @@ public class RPXManager {
 		
 		return "";
 	}
+
+	
+	@GET
+	@AnonymousAllowed
+	@Produces({MediaType.TEXT_PLAIN})
+	@Path("/error")
+	public String getAuthenticationError()
+	{
+//		String error = getValue("authenticationError");
+		
+		return getValue("authenticationError");
+	}
+	
 	
 	/*
 	 * Parses the XML auth_info response for a mapped username. If none exists, returns null
@@ -126,6 +139,14 @@ public class RPXManager {
 	@AnonymousAllowed
 	@Produces({MediaType.TEXT_PLAIN})
 	@Path("/isConfigured")
+	public String isConfiguredString() 
+	{
+		if (isConfigured())
+			return "TRUE";
+		
+		return "FALSE";
+	}
+	
 	public boolean isConfigured() 
 	{
 		return ((getValue("apiKey") != null) && (getValue("base_url") != null));

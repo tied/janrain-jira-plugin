@@ -7,7 +7,7 @@
     </plugin-info>
     
     <servlet-filter name="Janrain Engage Authentication Servlet"  key="janrain_engage_endpoint" class="com.janrain.jira.plugins.RPXEndpoint"  location="before-dispatch" weight="200">
-        <description>This servlet is used to completes OpenID authentication.</description>
+        <description>This servlet is used to complete OpenID authentication.</description>
         <url-pattern>/rpx_end</url-pattern>
 	    <dispatcher>REQUEST</dispatcher>
         <dispatcher>FORWARD</dispatcher>

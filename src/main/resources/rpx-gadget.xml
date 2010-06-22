@@ -24,8 +24,8 @@
         #requireResource("com.atlassian.jira.gadgets:common")
 		#includeResources()
  			
- 			
 		<script type="text/javascript">
+ 			
  			(function () {
  				var gadget = AJS.Gadget ({
  					baseUrl: "__ATLASSIAN_BASE_URL__",
@@ -35,20 +35,54 @@
  						template: function(args) {		
  							var gadget = this;
  							this.getView().empty();
+
+							// Dummy cookie so that RPXEndpoint can get the gadget's prefix on the cookie name	      	
+	      					gadget.createCookie("engageGadgetCookieName", "engageGadgetCookieName", 0);
 	      	
  							var username = args.username;
+ 							var error = gadget.readCookie("engageAuthError");
+ 							
+ 							// If if can't find the cookie (because it expired, or it's the first time)
+ 							if(error == null)
+ 								error = "NULL";
+ 								
+ 							// Clear the cookie to the string we're using to indicate no error 
+ 							// (but still have the cookie since it can't always be deleted)
+ 							gadget.createCookie("engageAuthError", "NULL", 20);
+ 							
+ 							alert(error);
+ 							
  							var str = '<div style="margin:10px;">';
  			
- 							if(username === "")
+ 							if(args.configured == "FALSE")
  							{
- 								str += 'Login with your OpenID\
-									   	<form method="POST" target="_top" action="' +
-									   	args.startUrl +
-									   	'">\
-									   	<input name="openid_identifier">\
-									   	<input type="submit" value="login">\
-									   	</form>\
+ 								str += 'This Plugin has not been configured.\
+ 										Please contact your JIRA administrator.\
 									   	</div>';
+ 							}
+ 							else if(username === "")
+ 							{
+								// If error does equal the string "NULL" then there is no error 							
+ 								if(error != "NULL")
+ 								{	
+ 									str += 'There was an error authenticating:<br />\
+ 											<span style="margin: 2px; padding: 2px; border: 1px solid red; background: pink;">' +
+ 											error +
+ 											'</span><br />';
+									   		//</div>';
+								}
+ 								//else
+ 								//{
+ 								
+	 								str += 'Login with your OpenID\
+										   	<form method="POST" target="_top" action="' +
+										   	args.startUrl +
+										   	'">\
+										   	<input name="openid_identifier">\
+										   	<input type="submit" value="login">\
+										   	</form>\
+										   	</div>';
+								//}
 							}
 							else
 							{
@@ -61,21 +95,17 @@
 							}
 											
  							this.getView().html(str);
-   										
-			                gadget.resize();
+   							
+   						    gadget.resize();
+ 							 
  						},
  						args: [{
- 							key: "startUrl",
+ 							key: "configured",
  							ajaxOptions: function() {
  								return { 
- 									url: "/rest/com-janrain-rpx-rest/1.0/manager/startUrl",
+ 									url: "/rest/com-janrain-rpx-rest/1.0/manager/isConfigured",
  									dataType: "text",
  									cache: false
- 									//, 
- 									//beforeSend: function() { alert("before"); },
-   									//complete: function() { alert("complete"); },
- 									//error: function(a, b, c) { alert("error: " + a); },
- 									//success: function(a, b, c) { alert("success"); }
  								}
  							}	
  						},
@@ -86,11 +116,16 @@
  									url: "/rest/com-janrain-rpx-rest/1.0/manager/username",
  									dataType: "text",
  									cache: false
- 									//, 
- 									//beforeSend: function() { alert("before"); },
-   									//complete: function() { alert("complete"); },
- 									//error: function(a, b, c) { alert("error: " + a); },
- 									//success: function(a, b, c) { alert("success"); }
+ 								}
+ 							}	
+ 						},
+ 						{
+ 							key: "startUrl",
+ 							ajaxOptions: function() {
+ 								return { 
+ 									url: "/rest/com-janrain-rpx-rest/1.0/manager/startUrl",
+ 									dataType: "text",
+ 									cache: false
  								}
  							}	
  						}]
