@@ -96,8 +96,6 @@ public class RPXEndpoint implements Filter
 	    
 	    
 	    
-	    
-	    
 //	    setErrorCookie(response, "authenticationError", "");
 	    
 	    RPXManager rpxManager = new RPXManager();

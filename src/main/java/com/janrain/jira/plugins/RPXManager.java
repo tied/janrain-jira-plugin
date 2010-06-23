@@ -1,6 +1,7 @@
 package com.janrain.jira.plugins;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -64,6 +65,9 @@ public class RPXManager {
 	{
 		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
 		String str = null;
+		String jiraUrl = getValue("jira_url");
+		
+		System.out.println(PS.getKeys());
 		
 		try  
 		{
@@ -73,7 +77,13 @@ public class RPXManager {
 		{
 			str = null;
 		}
-		return str + "/openid/start?token_url=http%3A%2F%2Flocalhost%3A2990%2Fjira%2Frpx_end";
+		
+		return str + "/openid/start?token_url=" +
+		   jiraUrl + "%2Frpx_end";
+
+	//	return str + "/openid/start?open_identifier=https%3A%2F%2Fucxt.kodak.com&token_url=" +
+	//		   jiraUrl + "%2Frpx_end";
+	//	return str + "/openid/start?token_url=http%3A%2F%2Flocalhost%3A2990%2Fjira%2Frpx_end";
 	}
 
 	@GET
@@ -154,9 +164,11 @@ public class RPXManager {
 	
 	public void configure(String apiKey)
 	{
-	
+		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
+
         String base_url;
-	
+        String jiraUrl = PS.getString("jira.baseurl");
+	   
         String data = "apiKey=" + apiKey + "&format=xml";
 		
         try 
@@ -217,10 +229,22 @@ public class RPXManager {
             throw new RuntimeException("Unexpected XML error", e);
         }
      
-	    System.out.println("Storing the apiKey and base_url: " + apiKey + ", " + base_url);
+        System.out.println("JIRA URL: " + jiraUrl);
+		
+		try 
+		{
+			jiraUrl = java.net.URLEncoder.encode(jiraUrl, "UTF-8");
+		} 
+		catch (UnsupportedEncodingException e) 
+		{
+			throw new RuntimeException("URL Encoding error", e);
+	    }
+
+		System.out.println("Storing the apiKey and base_url: " + apiKey + ", " + base_url);
 
 	    storeKeyValue("apiKey", apiKey);
         storeKeyValue("base_url", base_url);
+        storeKeyValue("jira_url", jiraUrl);
 			
 		System.out.println("Stored");
         
