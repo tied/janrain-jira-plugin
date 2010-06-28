@@ -263,7 +263,6 @@ public class RPXManager {
         storeKeyValue("jira_url", jiraUrl);
 			
 		System.out.println("Stored");
-        
         return;
 	}
 }
