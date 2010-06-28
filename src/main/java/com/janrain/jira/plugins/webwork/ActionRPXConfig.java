@@ -1,11 +1,11 @@
 package com.janrain.jira.plugins.webwork;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Enumeration;
 
-import com.atlassian.jira.config.properties.PropertiesManager;
 import com.atlassian.jira.web.action.JiraWebActionSupport;
-import com.opensymphony.module.propertyset.PropertySet;
-import com.janrain.jira.plugins.*;
+import com.janrain.jira.plugins.RPXManager;
 
 /**
  * Webwork has an ActionSupport class that includes some commonly
@@ -50,7 +50,7 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 		System.out.println("doValidation");
 		action = "none";
 
-		for (Enumeration e =  request.getParameterNames(); e.hasMoreElements() ;) 
+		for (Enumeration e = request.getParameterNames(); e.hasMoreElements() ;) 
 		{
             String n = (String)e.nextElement();
             String[] vals = request.getParameterValues(n);
@@ -64,11 +64,7 @@ public class ActionRPXConfig extends JiraWebActionSupport {
             {
             	apiKey = vals[0];
             	
-            	if (apiKey.length() == 0)
-            	{
-            		addErrorMessage("The API key you entered was not correct.");
-            	}
-            	else
+            	if (apiKey.length() > 0)
             	{
             		try 
             		{
@@ -77,6 +73,23 @@ public class ActionRPXConfig extends JiraWebActionSupport {
             		catch(Exception exception) 
             		{ 
             			addErrorMessage(exception.getLocalizedMessage());
+            		}
+            	}
+            }
+            else if (n.equals("providerUrl"))
+            {
+            	String providerUrl = vals[0];
+            	if (providerUrl.length() > 0)
+            	{
+            		try
+            		{
+            			new URL(providerUrl);
+            			rpxManager.storeKeyValue("providerUrl", vals[0]);
+            		}
+            		catch (MalformedURLException e1)
+            		{
+            			addErrorMessage("The provider URL entered was not a valid URL");
+            			addErrorMessage(e1.getLocalizedMessage());
             		}
             	}
             }
@@ -122,11 +135,12 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 	public String getApiKey()
 	{
 		RPXManager rpxManager = new RPXManager();
-		
-		String str = null;
-		
-		str = rpxManager.getValue("apiKey");
-		
-		return str;
+		return rpxManager.getValue("apiKey");
+	}
+	
+	public String getProviderUrl()
+	{
+		RPXManager rpxManager = new RPXManager();
+		return rpxManager.getValue("providerUrl");
 	}
 }

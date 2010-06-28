@@ -18,6 +18,11 @@
     	    Your current API Key is ${action.getApiKey()}
     	  </td>
   		</tr>
+  		<tr>
+  		  <td>
+  		    Your current Provider URL is ${action.htmlEncode($action.getProviderUrl())}
+  		  </td>
+  		</tr>
 		#end
 
   		<tr>

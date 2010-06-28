@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -64,26 +65,41 @@ public class RPXManager {
 	public String getStartUrl()
 	{
 		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
-		String str = null;
 		String jiraUrl = getValue("jira_url");
 		
 		System.out.println(PS.getKeys());
 		
+		String str = null;
 		try  
 		{
 			str = PS.getText("com.janrain.rpx.base_url");
-		} 
+		}
 		catch (PropertyException e) 
 		{
-			str = null;
+			// do nothing
 		}
 		
-		return str + "/openid/start?token_url=" +
-		   jiraUrl + "%2Frpx_end";
-
-	//	return str + "/openid/start?open_identifier=https%3A%2F%2Fucxt.kodak.com&token_url=" +
-	//		   jiraUrl + "%2Frpx_end";
-	//	return str + "/openid/start?token_url=http%3A%2F%2Flocalhost%3A2990%2Fjira%2Frpx_end";
+		String providerUrl = null;
+		try
+		{
+			providerUrl = URLEncoder.encode(PS.getText("com.janrain.rpx.providerUrl"), "UTF-8");
+		}
+		catch (PropertyException e) 
+		{
+			// do nothing
+		} catch (UnsupportedEncodingException e) {
+			// This will never happen
+		}
+		
+		if (providerUrl == null || str == null)
+		{
+			return "";
+		}
+		else
+		{
+			return str + "/openid/start?openid_identifier=" + providerUrl +
+			       "&token_url=" + jiraUrl + "%2Frpx_end";
+		}
 	}
 
 	@GET
@@ -159,7 +175,7 @@ public class RPXManager {
 	
 	public boolean isConfigured() 
 	{
-		return ((getValue("apiKey") != null) && (getValue("base_url") != null));
+		return getValue("apiKey") != null && getValue("base_url") != null && getValue("providerUrl") != null;
 	}
 	
 	public void configure(String apiKey)

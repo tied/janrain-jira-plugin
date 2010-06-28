@@ -50,8 +50,6 @@
  							// (but still have the cookie since it can't always be deleted)
  							gadget.createCookie("engageAuthError", "NULL", 20);
  							
- 							alert(error);
- 							
  							var str = '<div style="margin:10px;">';
  			
  							if(args.configured == "FALSE")
@@ -74,12 +72,10 @@
  								//else
  								//{
  								
-	 								str += 'Login with your OpenID\
-										   	<form method="POST" target="_top" action="' +
+	 								str += '<form method="POST" target="_top" action="' +
 										   	args.startUrl +
 										   	'">\
-										   	<input name="openid_identifier">\
-										   	<input type="submit" value="login">\
+										   	<input type="submit" value="Use OpenID to log in">\
 										   	</form>\
 										   	</div>';
 								//}

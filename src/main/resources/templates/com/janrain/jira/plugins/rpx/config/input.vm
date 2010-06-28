@@ -50,7 +50,29 @@
 						<br>
 						<!-- <font size="1">An example of a text parameter.</font> --> 
 			    	</td>
-		        </tr>  
+		        </tr>
+				#if ($action.getProviderUrl())
+				<tr>
+    				<td>
+    					<span style="margin: 2px; border: 1px solid yellow; background: lightYellow;">Current provider url: $action.htmlEncode($action.getProviderUrl())</span>
+    				</td>
+  				</tr>
+				#end
+				<tr>
+					<td class="jiraformbody">
+						Please enter the OpenID provider url.
+					</td>
+				</tr>
+				<tr>
+					<td class="fieldValueArea">
+						<input type="text"
+							     id="id_providerUrl"
+							     name="providerUrl"
+							     value=""
+							     size="60"
+							     />
+					</td>
+				</tr>
 		        <tr>
 		        	<td class="fieldValueArea">
 				        <input type="submit" name="Submit" id="Submit" value="Save"
