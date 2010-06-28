@@ -1,34 +1,24 @@
 package com.janrain.jira.plugins;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Locale;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.opensymphony.user.EntityNotFoundException;
-import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+import org.w3c.dom.Element;
+
 import com.atlassian.seraph.auth.DefaultAuthenticator;
 import com.janrain.jira.plugins.lib.RPX;
+import com.opensymphony.user.EntityNotFoundException;
 import com.opensymphony.user.User;
 import com.opensymphony.user.UserManager;
-
-//import org.apache.commons.httpclient.Cookie;
-import javax.servlet.http.Cookie;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import org.w3c.dom.Element;
 
 
 public class RPXEndpoint implements Filter 
