@@ -14,6 +14,9 @@
           			</td>
         		</tr>
 
+				<!-- KODAK -->
+				<!-- Any errors returned by the configuration process will be displayed here. -->
+
 				#foreach ($error in $action.getErrorMessages())
   				<tr>
     				<td>
@@ -21,6 +24,8 @@
     				</td>
   				</tr>
 				#end    
+
+				<!-- Show the apiKey if it was previously configured -->
 
 				#if ($action.getApiKey())
 				<tr>
@@ -32,7 +37,7 @@
 
 		        <tr>
 		          <td class="jiraformbody">
-			          Please enter your API key to configure the Janrain Engage Plugin.
+			          Please enter your API key to configure the Janrain Engage Plugin:
 		          </td>
 		        </tr>   
 
@@ -48,19 +53,23 @@
 						         size="60"
 						         />
 						<br>
-						<!-- <font size="1">An example of a text parameter.</font> --> 
 			    	</td>
 		        </tr>
+
+				<!-- Show the provider URL if it was previously configured -->
+
 				#if ($action.getProviderUrl())
 				<tr>
     				<td>
-    					<span style="margin: 2px; border: 1px solid yellow; background: lightYellow;">Current provider url: $action.htmlEncode($action.getProviderUrl())</span>
+    					<span style="margin: 2px; border: 1px solid yellow; background: lightYellow;">
+    						Current provider URL: $action.htmlEncode($action.getProviderUrl())
+    					</span>
     				</td>
   				</tr>
 				#end
 				<tr>
 					<td class="jiraformbody">
-						Please enter the OpenID provider url.
+						Please enter the OpenID provider URL:
 					</td>
 				</tr>
 				<tr>
@@ -83,7 +92,7 @@
 		        	</td> 
 		       	</tr>
     
-				#if ($action.getApiKey())
+				#if ($action.getApiKey() && $action.getProviderUrl())
 				<tr>
 					<td>
 						<a href="./RPXConfigAction.jspa?action=cancel">Cancel</a>

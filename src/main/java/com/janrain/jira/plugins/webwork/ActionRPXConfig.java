@@ -50,7 +50,7 @@ public class ActionRPXConfig extends JiraWebActionSupport {
 		System.out.println("doValidation");
 		action = "none";
 
-		for (Enumeration e = request.getParameterNames(); e.hasMoreElements() ;) 
+		for (Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) 
 		{
             String n = (String)e.nextElement();
             String[] vals = request.getParameterValues(n);

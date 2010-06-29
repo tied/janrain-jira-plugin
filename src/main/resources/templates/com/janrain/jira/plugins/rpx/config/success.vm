@@ -12,7 +12,7 @@
           </td>
         </tr>
        
-        #if ($action.getApiKey())
+        #if ($action.getApiKey() && $action.getProviderUrl())
   		<tr>
     	  <td>
     	    Your current API Key is ${action.getApiKey()}

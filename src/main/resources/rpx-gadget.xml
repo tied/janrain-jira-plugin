@@ -60,25 +60,21 @@
  							}
  							else if(username === "")
  							{
-								// If error does equal the string "NULL" then there is no error 							
+								// If error equals the string "NULL" then there is no error 							
  								if(error != "NULL")
  								{	
  									str += 'There was an error authenticating:<br />\
  											<span style="margin: 2px; padding: 2px; border: 1px solid red; background: pink;">' +
  											error +
  											'</span><br />';
-									   		//</div>';
 								}
- 								//else
- 								//{
  								
-	 								str += '<form method="POST" target="_top" action="' +
-										   	args.startUrl +
-										   	'">\
-										   	<input type="submit" value="Use OpenID to log in">\
-										   	</form>\
-										   	</div>';
-								//}
+	 							str += '<form method="POST" target="_top" action="' +
+									   	args.startUrl +
+									   	'">\
+									   	<input type="submit" value="Use OpenID to log in">\
+									   	</form>\
+									   	</div>';
 							}
 							else
 							{

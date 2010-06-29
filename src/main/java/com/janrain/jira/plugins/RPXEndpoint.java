@@ -28,7 +28,6 @@ public class RPXEndpoint implements Filter
 	public void destroy() 
 	{
 		// TODO Auto-generated method stub
-
 	}
 	
 	private void setErrorCookie(HttpServletRequest request, HttpServletResponse response, String value)
@@ -54,22 +53,15 @@ public class RPXEndpoint implements Filter
 	    name += "engageAuthError";
 	    
 		System.out.println("Cookie name found to be: " + name);
-
-		
-		
 		
 		if (name != null)
 			errorCookie = new Cookie(name, value);
 		else
 			return;
 		
-		
 		errorCookie.setPath("/");
-		//errorCookie getPath()    setDomain("/");
 		response.addCookie(errorCookie);
 	}
-	
-
 	
 	
 	/*
@@ -82,11 +74,6 @@ public class RPXEndpoint implements Filter
 		
 	    HttpServletResponse response = (HttpServletResponse) arg1;
 	    HttpServletRequest request = (HttpServletRequest) arg0;
-	    
-	    
-	    
-	    
-//	    setErrorCookie(response, "authenticationError", "");
 	    
 	    RPXManager rpxManager = new RPXManager();
 				
@@ -125,7 +112,6 @@ public class RPXEndpoint implements Filter
 		}	 
 		catch(RuntimeException runtimeException) 
 		{
-			// return with an error
 			System.out.println("Runtime Exception Occured :");// + runtimeException.getMessage());
 			setErrorCookie(request, response,  "Runtime Exception caught during auth_info parsing.");
 			response.sendRedirect("/jira");
@@ -133,7 +119,6 @@ public class RPXEndpoint implements Filter
 		}
 		catch(Exception exception) 
 		{
-			// return with an error
 			System.out.println("Exception Occured :" + exception.getMessage());
 			setErrorCookie(request, response,  "Exception caught during auth_info parsing.");
 			response.sendRedirect("/jira");
@@ -165,7 +150,6 @@ public class RPXEndpoint implements Filter
 	    }
 	    catch (EntityNotFoundException e) 
 	    {
-	    	// return with an error
 			e.printStackTrace();
 			String message = "Authenticated user, " + username + ", not found in JIRA database.";
 			setErrorCookie(request, response,  message);
@@ -174,15 +158,12 @@ public class RPXEndpoint implements Filter
 		}
 	    
 		System.out.println("Logging user in");
-	    //HttpServletRequest request = (HttpServletRequest) arg0;
-	    //HttpServletResponse response = (HttpServletResponse) arg1;
 	    request.getSession().setAttribute(DefaultAuthenticator.LOGGED_IN_KEY, user);
 	    request.getSession().setAttribute(DefaultAuthenticator.LOGGED_OUT_KEY, null);
 		System.out.println("User logged in");
 
 		System.out.println("Redirecting");
 		response.sendRedirect("/jira");
-
 	}
 	
 	 
@@ -190,7 +171,8 @@ public class RPXEndpoint implements Filter
 	 * Called before doFilter
 	 * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
 	 */
-	public void init(FilterConfig arg0) throws ServletException {
+	public void init(FilterConfig arg0) throws ServletException 
+	{
 		// TODO Auto-generated method stub
 
 	}

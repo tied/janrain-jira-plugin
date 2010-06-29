@@ -10,12 +10,12 @@
     <version>1.0-SNAPSHOT</version>
 
     <organization>
-        <name>Example Company</name>
-        <url>http://www.example.com/</url>
+        <name>Janrain</name>
+        <url>http://www.janrain.com/</url>
     </organization>
 
     <name>rpx</name>
-    <description>This is the com.janrain.jira.plugins:rpx plugin for Atlassian JIRA.</description>
+    <description>This is the com.janrain.jira.plugins:Janrain Engage Plugin for Atlassian JIRA.</description>
     <packaging>atlassian-plugin</packaging>
 
     <dependencies>
@@ -62,10 +62,6 @@
 			<scope>provided</scope>
 		</dependency>
     </dependencies>
-
-
-
-
 
     <build>
         <plugins>
