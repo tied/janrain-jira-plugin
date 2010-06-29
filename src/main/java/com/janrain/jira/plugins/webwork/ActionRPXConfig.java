@@ -60,6 +60,11 @@ public class ActionRPXConfig extends JiraWebActionSupport {
             {
             	action = vals[0];
             }
+            else if (n.equals("clear"))
+            {
+            	rpxManager.clear();
+            	System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            }
             else if (n.equals("apiKey"))
             {
             	apiKey = vals[0];
