@@ -87,8 +87,14 @@ public class RPXManager {
 		catch (PropertyException e) 
 		{
 			// do nothing
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e)
+		{
 			// This will never happen
+		}
+		catch (NullPointerException e)
+		{
+			// do nothing
 		}
 		
 		if (providerUrl == null || str == null)
@@ -171,6 +177,14 @@ public class RPXManager {
 			return "TRUE";
 		
 		return "FALSE";
+	}
+	
+	public void clear()
+	{
+		PropertySet PS = PropertiesManager.getInstance().getPropertySet();
+		PS.remove("com.janrain.rpx.apiKey");
+		PS.remove("com.janrain.rpx.base_url");
+		PS.remove("com.janrain.rpx.providerUrl");
 	}
 	
 	public boolean isConfigured() 

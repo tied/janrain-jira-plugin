@@ -89,6 +89,7 @@
 			                     title="Press Ctrl+S to submit form"
 			                     class="spaced"
 			                     />
+			            <input type="submit" name="clear" id="Clear" value="Clear Settings"/>
 		        	</td> 
 		       	</tr>
     
