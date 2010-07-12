@@ -20,7 +20,9 @@
 				#foreach ($error in $action.getErrorMessages())
   				<tr>
     				<td>
-    					<span style="margin: 2px; border: 1px solid red; background: pink;">${error}</span>
+    					<span style="margin: 2px; border: 1px solid red; background: pink;">
+    						$error
+    					</span>
     				</td>
   				</tr>
 				#end    

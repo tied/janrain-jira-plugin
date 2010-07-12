@@ -63,11 +63,11 @@ public class ActionRPXConfig extends JiraWebActionSupport {
             else if (n.equals("clear"))
             {
             	rpxManager.clear();
-            	System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             }
             else if (n.equals("apiKey"))
             {
             	apiKey = vals[0];
+            	apiKey = apiKey.trim();
             	
             	if (apiKey.length() > 0)
             	{
@@ -83,13 +83,14 @@ public class ActionRPXConfig extends JiraWebActionSupport {
             }
             else if (n.equals("providerUrl"))
             {
-            	String providerUrl = vals[0];
+            	String providerUrl = vals[0].trim();
+            	
             	if (providerUrl.length() > 0)
             	{
             		try
             		{
             			new URL(providerUrl);
-            			rpxManager.storeKeyValue("providerUrl", vals[0]);
+            			rpxManager.storeKeyValue("providerUrl", providerUrl);
             		}
             		catch (MalformedURLException e1)
             		{

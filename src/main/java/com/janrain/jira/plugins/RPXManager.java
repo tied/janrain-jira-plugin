@@ -103,6 +103,9 @@ public class RPXManager {
 		}
 		else
 		{
+			System.out.println(str + "/openid/start?openid_identifier=" + providerUrl +
+				   "&token_url=" + jiraUrl + "%2Frpx_end");
+			
 			return str + "/openid/start?openid_identifier=" + providerUrl +
 			       "&token_url=" + jiraUrl + "%2Frpx_end";
 		}
@@ -269,13 +272,17 @@ public class RPXManager {
 		{
 			throw new RuntimeException("URL Encoding error", e);
 	    }
+		catch (Exception e)
+		{
+			throw new RuntimeException("JIRA base_url error", e);
+		}
 
 		System.out.println("Storing the apiKey and base_url: " + apiKey + ", " + base_url);
 
 	    storeKeyValue("apiKey", apiKey);
         storeKeyValue("base_url", base_url);
-        storeKeyValue("jira_url", jiraUrl);
-			
+        storeKeyValue("jira_url", jiraUrl);		
+		
 		System.out.println("Stored");
         return;
 	}

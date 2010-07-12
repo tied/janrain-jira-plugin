@@ -94,6 +94,16 @@ public class RPXEndpoint implements Filter
 		String token = arg0.getParameter("token");
 		System.out.println("Token: " + token);
 		
+		String error = arg0.getParameter("error");
+		System.out.println("Error: " + error);
+		
+		if(error != null)
+		{
+			setErrorCookie(request, response, error);
+			response.sendRedirect("/jira");
+			return;
+		}
+		
 		if(token == null) 
 		{
 			setErrorCookie(request, response,  "Token not found in response.");
