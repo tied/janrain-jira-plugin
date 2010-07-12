@@ -30,6 +30,11 @@ public class RPXEndpoint implements Filter
 		// TODO Auto-generated method stub
 	}
 	
+	private void sendResponseRedirect(HttpServletResponse response) throws IOException
+	{
+		response.sendRedirect("/");
+	}
+	
 	private void setErrorCookie(HttpServletRequest request, HttpServletResponse response, String value)
 	{
 	    Cookie[] cookies = request.getCookies();
@@ -81,9 +86,11 @@ public class RPXEndpoint implements Filter
 		{
 			System.out.println("RPX not configured");
 			setErrorCookie(request, response,  "RPX Not Configured.");
-			response.sendRedirect("/jira");
+			sendResponseRedirect(response);
+			//response.sendRedirect("/jira");
 			return;
 		}
+		
 		
 		System.out.println("Creating RPX instance");
 		RPX rpx = new RPX(rpxManager.getValue("apiKey"), rpxManager.getValue("base_url"));
@@ -100,14 +107,16 @@ public class RPXEndpoint implements Filter
 		if(error != null)
 		{
 			setErrorCookie(request, response, error);
-			response.sendRedirect("/jira");
+			sendResponseRedirect(response);
+			//response.sendRedirect("/jira");
 			return;
 		}
 		
 		if(token == null) 
 		{
 			setErrorCookie(request, response,  "Token not found in response.");
-			response.sendRedirect("/jira");
+			sendResponseRedirect(response);
+			//response.sendRedirect("/jira");
 			return;
 		}
 		 
@@ -124,14 +133,16 @@ public class RPXEndpoint implements Filter
 		{
 			System.out.println("Runtime Exception Occured :");// + runtimeException.getMessage());
 			setErrorCookie(request, response,  "Runtime Exception caught during auth_info parsing.");
-			response.sendRedirect("/jira");
+			sendResponseRedirect(response);
+			//response.sendRedirect("/jira");
 			return;
 		}
 		catch(Exception exception) 
 		{
 			System.out.println("Exception Occured :" + exception.getMessage());
 			setErrorCookie(request, response,  "Exception caught during auth_info parsing.");
-			response.sendRedirect("/jira");
+			sendResponseRedirect(response);
+			//response.sendRedirect("/jira");
 			return;
 		}
 
@@ -142,7 +153,8 @@ public class RPXEndpoint implements Filter
 		if(username == null) 
 		{
 			setErrorCookie(request, response,  "Authenticated user is not mapped to a JIRA account.");
-			response.sendRedirect("/jira");
+			sendResponseRedirect(response);
+			//response.sendRedirect("/jira");
 			return;
 		}
 		
@@ -163,7 +175,8 @@ public class RPXEndpoint implements Filter
 			e.printStackTrace();
 			String message = "Authenticated user, " + username + ", not found in JIRA database.";
 			setErrorCookie(request, response,  message);
-			response.sendRedirect("/jira");
+			sendResponseRedirect(response);
+			//response.sendRedirect("/jira");
 			return;
 		}
 	    
@@ -173,7 +186,8 @@ public class RPXEndpoint implements Filter
 		System.out.println("User logged in");
 
 		System.out.println("Redirecting");
-		response.sendRedirect("/jira");
+		sendResponseRedirect(response);
+		//response.sendRedirect("/jira");
 	}
 	
 	 
